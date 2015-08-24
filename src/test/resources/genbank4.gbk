@@ -1,0 +1,65 @@
+LOCUS       JX170759                1017 bp    DNA     circular VRL 30-JUN-2015
+DEFINITION  Banana bunchy top virus isolate TJ3 segment DNA-C, complete
+            sequence.
+ACCESSION   JX170759
+VERSION     JX170759.1  GI:452056157
+KEYWORDS    .
+SOURCE      Banana bunchy top virus
+  ORGANISM  Banana bunchy top virus
+            Viruses; ssDNA viruses; Nanoviridae; Babuvirus.
+REFERENCE   1  (bases 1 to 1017)
+  AUTHORS   Ali,M., Rozeena, Aish,M., Hussain,M.I., Mehmood,S., Soomro,M.H.,
+            Naqvi,S.M.S. and Hyder,M.Z.
+  TITLE     Studying Banana bunchy top virus evolution in Pakistan
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 1017)
+  AUTHORS   Ali,M., Rozeena, Aish,M., Hussain,M.I., Mehmood,S., Soomro,M.H.,
+            Naqvi,S.M.S. and Hyder,M.Z.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (11-JUN-2012) Department of Biosciences, COMSATS
+            Institute of Information Technology, The Gene Lab, Department of
+            Biosciences, BioBlock, Chack Shahzad Campus, Park Road, Islamabad
+            44000, Pakistan
+COMMENT     ##Assembly-Data-START##
+            Assembly Method       :: DNA Dragon v. 1.5.2
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..1017
+                     /organism="Banana bunchy top virus"
+                     /mol_type="genomic DNA"
+                     /isolate="TJ3"
+                     /db_xref="taxon:12585"
+                     /segment="DNA-C"
+                     /country="Pakistan: Sindh, Tandojam, Ghazi Khan Mirpoto
+                     Village"
+                     /collection_date="2011"
+     CDS             240..725
+                     /note="Clink"
+                     /codon_start=1
+                     /product="cell-cycle link protein"
+                     /protein_id="AGF92155.1"
+                     /db_xref="GI:452056158"
+                     /translation="MEFWESSAMPDDVKREIKEIYWEDRKKLLFCQKLKSYVRRILAY
+                     GDQEDALAGVKDLKTSIIRYSEYLKKPCVVICCVSNKSIVYRLNSMVFFYHEYLEELG
+                     GDYSVYQDLYCDEVLSSSSTEEEDVGVIYRNVIMASTQEKFSWSDCQKIVISDYDVTL
+                     L"
+ORIGIN      
+        1 agcgctgggg cttattatta cccccagcgc tcaggacggg acatcacgtg caactaacag
+       61 acgcacgtga gaatgcagta gcttgcagcg aaagatagac gtcaacatca ataaagaaga
+      121 aggaatattc tttgcttcgg cacgaagcaa agggtataga tatttgttcg agatgcgaaa
+      181 atggaggcta tttaaacctg atggttttgt gatttccgaa atcactcgtc ggaagagaaa
+      241 tggagttctg ggaatcgtct gctatgcctg acgatgtgaa gagagagatt aaggaaatat
+      301 attgggaaga tcggaagaaa cttcttttct gtcagaagtt gaagagctat gtcagaagga
+      361 ttcttgccta cggagatcaa gaggatgccc ttgctggagt gaaggatttg aagacttcta
+      421 ttattcgcta tagcgaatac ttgaagaaac catgtgtggt aatttgttgt gttagcaata
+      481 aatcaattgt gtataggtta aacagcatgg tgttctttta tcatgaatac cttgaagaac
+      541 taggtggtga ttactcagta tatcaagatc tctattgtga tgaggttctc tcttcttcat
+      601 cgacagagga agaagatgta ggagtaatat ataggaatgt tatcatggca tcgactcaag
+      661 agaagttctc ttggagtgat tgtcagaaga tagtaatatc agactacgat gtaacattac
+      721 tctaatgtaa tatccattat catcaataaa ataatggaat gttgattatg tatttatcat
+      781 aaatacataa tggtatacgt atagcataaa atacattaac caacatacaa cacactataa
+      841 aatacaacac actataacaa atgtaaggga tctgattggg ctatattaac cccttaaggg
+      901 ccgaaggccc gtttaaatat gtgttggacg aagtccaaac acaaaaaagt aagcagaaca
+      961 acggaataat atgagctggc aacgtagggt ccatgtcccg agttagtgcg ccacgta
+//

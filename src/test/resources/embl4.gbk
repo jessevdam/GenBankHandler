@@ -1,0 +1,77 @@
+ID   JX170759; SV 1; circular; genomic DNA; STD; VRL; 1017 BP.
+XX
+AC   JX170759;
+XX
+DT   01-JUL-2015 (Rel. 125, Created)
+DT   01-JUL-2015 (Rel. 125, Last updated, Version 1)
+XX
+DE   Banana bunchy top virus isolate TJ3 segment DNA-C, complete sequence.
+XX
+KW   .
+XX
+OS   Banana bunchy top virus
+OC   Viruses; ssDNA viruses; Nanoviridae; Babuvirus.
+XX
+RN   [1]
+RP   1-1017
+RA   Ali M., Rozeena, Aish M., Hussain M.I., Mehmood S., Soomro M.H.,
+RA   Naqvi S.M.S., Hyder M.Z.;
+RT   "Studying Banana bunchy top virus evolution in Pakistan";
+RL   Unpublished.
+XX
+RN   [2]
+RP   1-1017
+RA   Ali M., Rozeena, Aish M., Hussain M.I., Mehmood S., Soomro M.H.,
+RA   Naqvi S.M.S., Hyder M.Z.;
+RT   ;
+RL   Submitted (11-JUN-2012) to the INSDC.
+RL   Department of Biosciences, COMSATS Institute of Information Technology, The
+RL   Gene Lab, Department of Biosciences, BioBlock, Chack Shahzad Campus, Park
+RL   Road, Islamabad 44000, Pakistan
+XX
+DR   MD5; c5154428624d5640d617dcbda4ddfe4f.
+XX
+CC   ##Assembly-Data-START##
+CC   Assembly Method       :: DNA Dragon v. 1.5.2
+CC   Sequencing Technology :: Sanger dideoxy sequencing
+CC   ##Assembly-Data-END##
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..1017
+FT                   /organism="Banana bunchy top virus"
+FT                   /segment="DNA-C"
+FT                   /isolate="TJ3"
+FT                   /mol_type="genomic DNA"
+FT                   /country="Pakistan:Sindh, Tandojam, Ghazi Khan Mirpoto
+FT                   Village"
+FT                   /collection_date="2011"
+FT                   /db_xref="taxon:12585"
+FT   CDS             240..725
+FT                   /codon_start=1
+FT                   /product="cell-cycle link protein"
+FT                   /note="Clink"
+FT                   /protein_id="AGF92155.1"
+FT                   /translation="MEFWESSAMPDDVKREIKEIYWEDRKKLLFCQKLKSYVRRILAYG
+FT                   DQEDALAGVKDLKTSIIRYSEYLKKPCVVICCVSNKSIVYRLNSMVFFYHEYLEELGGD
+FT                   YSVYQDLYCDEVLSSSSTEEEDVGVIYRNVIMASTQEKFSWSDCQKIVISDYDVTLL"
+XX
+SQ   Sequence 1017 BP; 342 A; 164 C; 232 G; 279 T; 0 other;
+     agcgctgggg cttattatta cccccagcgc tcaggacggg acatcacgtg caactaacag        60
+     acgcacgtga gaatgcagta gcttgcagcg aaagatagac gtcaacatca ataaagaaga       120
+     aggaatattc tttgcttcgg cacgaagcaa agggtataga tatttgttcg agatgcgaaa       180
+     atggaggcta tttaaacctg atggttttgt gatttccgaa atcactcgtc ggaagagaaa       240
+     tggagttctg ggaatcgtct gctatgcctg acgatgtgaa gagagagatt aaggaaatat       300
+     attgggaaga tcggaagaaa cttcttttct gtcagaagtt gaagagctat gtcagaagga       360
+     ttcttgccta cggagatcaa gaggatgccc ttgctggagt gaaggatttg aagacttcta       420
+     ttattcgcta tagcgaatac ttgaagaaac catgtgtggt aatttgttgt gttagcaata       480
+     aatcaattgt gtataggtta aacagcatgg tgttctttta tcatgaatac cttgaagaac       540
+     taggtggtga ttactcagta tatcaagatc tctattgtga tgaggttctc tcttcttcat       600
+     cgacagagga agaagatgta ggagtaatat ataggaatgt tatcatggca tcgactcaag       660
+     agaagttctc ttggagtgat tgtcagaaga tagtaatatc agactacgat gtaacattac       720
+     tctaatgtaa tatccattat catcaataaa ataatggaat gttgattatg tatttatcat       780
+     aaatacataa tggtatacgt atagcataaa atacattaac caacatacaa cacactataa       840
+     aatacaacac actataacaa atgtaaggga tctgattggg ctatattaac cccttaaggg       900
+     ccgaaggccc gtttaaatat gtgttggacg aagtccaaac acaaaaaagt aagcagaaca       960
+     acggaataat atgagctggc aacgtagggt ccatgtcccg agttagtgcg ccacgta         1017
+//

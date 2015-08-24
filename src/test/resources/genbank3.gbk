@@ -1,0 +1,72 @@
+LOCUS       NC_003479               1111 bp ss-DNA     circular VRL 10-FEB-2015
+DEFINITION  Banana bunchy top virus DNA R, complete sequence.
+ACCESSION   NC_003479
+VERSION     NC_003479.1  GI:19744936
+DBLINK      BioProject: PRJNA14621
+KEYWORDS    RefSeq.
+SOURCE      Banana bunchy top virus
+  ORGANISM  Banana bunchy top virus
+            Viruses; ssDNA viruses; Nanoviridae; Babuvirus.
+REFERENCE   1  (bases 1 to 1111)
+  AUTHORS   Harding,R.M., Burns,T.M., Hafner,G., Dietzgen,R.G. and Dale,J.L.
+  TITLE     Nucleotide sequence of one component of the banana bunchy top virus
+            genome contains a putative replicase gene
+  JOURNAL   J. Gen. Virol. 74 (PT 3), 323-328 (1993)
+   PUBMED   8445361
+REFERENCE   2  (bases 1 to 1111)
+  AUTHORS   .
+  JOURNAL   Unpublished
+  MEDLINE   93187592
+REFERENCE   3  (bases 1 to 1111)
+  CONSRTM   NCBI Genome Project
+  TITLE     Direct Submission
+  JOURNAL   Submitted (27-MAR-2002) National Center for Biotechnology
+            Information, NIH, Bethesda, MD 20894, USA
+COMMENT     VALIDATED REFSEQ: This record has undergone validation or
+            preliminary review. The reference sequence was derived from S56276.
+            COMPLETENESS: full length.
+FEATURES             Location/Qualifiers
+     source          1..1111
+                     /organism="Banana bunchy top virus"
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:12585"
+                     /segment="DNA R"
+     gene            129..989
+                     /locus_tag="BBTVs1gp1"
+                     /note="orf V1"
+                     /db_xref="GeneID:963871"
+     CDS             129..989
+                     /locus_tag="BBTVs1gp1"
+                     /codon_start=1
+                     /product="replication initiation protein"
+                     /protein_id="NP_604483.1"
+                     /db_xref="GI:19744937"
+                     /db_xref="GeneID:963871"
+                     /translation="MARYVVCWMFTINNPTTLPVMRDEIKYMVYQVERGQEGTRHVQG
+                     YVEMKRRSSLKQMRGFFPGAHLEKRKGSQEEARSYCMKEDTRIEGPFEFGSFKLSCND
+                     NLFDVIQDMRETHKRPLEYLYDCPNTFDRSKDTLYRVQAEMNKTKAMNSWRTSFSAWT
+                     SEVENIMAQPCHRRIIWVYGPNGGEGKTTYAKHLMKTRNAFYSPGGKSLDICRLYNYE
+                     DIVIFDIPRCKEDYLNYGLLEEFKNGIIQSGKYEPVLKIVEYVEVIVMANFLPKEGIF
+                     SEDRIKLVSC"
+ORIGIN      
+        1 agatgtcccg agttagtgcg ccacgtaagc gctggggctt attattaccc ccagcgctcg
+       61 ggacgggaca tttgcatcta taaatagacc tcccccctct ccattacaag atcatcatcg
+      121 acgacagaat ggcgcgatat gtggtatgct ggatgttcac catcaacaat cccacaacac
+      181 taccagtgat gagggatgag ataaaatata tggtatatca agtggagagg ggacaggagg
+      241 gtactcgtca tgtgcaaggt tatgtcgaga tgaagagacg aagctctctg aagcagatga
+      301 gaggcttctt cccaggcgca caccttgaga aacgaaaggg aagccaagaa gaagcgcggt
+      361 catactgtat gaaggaagat acaagaatcg aaggtccctt cgagtttggt tcatttaaat
+      421 tgtcatgtaa tgataattta tttgatgtca tacaggatat gcgtgaaacg cacaaaaggc
+      481 ctttggagta tttatatgat tgtcctaaca ccttcgatag aagtaaggat acattataca
+      541 gagtacaagc agagatgaat aaaacgaagg cgatgaatag ctggagaact tctttcagtg
+      601 cttggacatc agaggtggag aatatcatgg cgcagccatg tcatcggaga ataatttggg
+      661 tctatggccc aaatggagga gaaggaaaga caacgtatgc aaaacatcta atgaagacga
+      721 gaaatgcgtt ttattctcca ggaggaaaat cattggatat atgtagactg tataattacg
+      781 aggatattgt tatatttgat attccaagat gcaaagagga ttatttaaat tatgggttat
+      841 tagaggaatt taagaatgga ataattcaaa gcgggaaata tgaacccgtt ttgaagatag
+      901 tagaatatgt cgaagtcatt gtaatggcta acttccttcc gaaggaagga atcttttctg
+      961 aagatcgaat aaagttggtt tcttgctgaa caagtaatga ctttacagcg cacgctccga
+     1021 caaaagcaca ctatgacaaa agtacgggta tctgattggg ttatcttaac gatctagggc
+     1081 cgtaggcccg tgagcaatga acggcgagat c
+//
+
