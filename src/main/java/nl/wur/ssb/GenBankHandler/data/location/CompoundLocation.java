@@ -40,4 +40,18 @@ public class CompoundLocation implements Location
 		}
 		return Util.i(toRet,0,-1) + ")";
 	}
+	public int getBeginPosition()
+	{
+	  int begin = Integer.MAX_VALUE;
+	  for(Location loc : elements)
+	  	 begin = Math.min(begin, loc.getEndPosition());
+	  return begin;		
+	}
+	public int getEndPosition()
+	{
+      int end = Integer.MIN_VALUE;
+      for(Location loc : elements)
+    	 end = Math.max(end, loc.getEndPosition());
+      return end;
+ 	}
 }

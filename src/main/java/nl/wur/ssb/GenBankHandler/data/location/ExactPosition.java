@@ -13,4 +13,14 @@ public class ExactPosition implements Position
 	{
 		return "" + (this.position + offset);
 	}
+	
+	public int getMinPos()
+	{
+	return this.position;
+	}
+	
+	public int getMaxPos()
+	{
+	return this.position;
+	}
 }

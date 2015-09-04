@@ -32,5 +32,13 @@ public class ComplementLocation implements Location
 	{
 		return "complement(" + this.location.toString(sequenceSize) + ")";
 	}
+	public int getBeginPosition()
+	{
+	  return location.getEndPosition();		
+	}
+	public int getEndPosition()
+	{
+      return location.getBeginPosition();
+ 	}
 	
 }
