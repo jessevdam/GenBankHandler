@@ -27,7 +27,7 @@ public abstract class InsdcParser
 	private String lastKey = null;
   private String lastValue = null;
   private boolean allowBogus = true;
-  public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+  public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
   
 	private HashSet<String> dblinks = new HashSet<String>();
 	private HashSet<String> refNums = new HashSet<String>();
