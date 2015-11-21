@@ -19,13 +19,11 @@ public class WithinPosition implements Position
     return "" + (start + offset) + "." + (end + offset);
   }
   
-  @Override
   public int getMinPos()
   {
     return this.start;
   }
 
-  @Override
   public int getMaxPos()
   {
     return this.end;

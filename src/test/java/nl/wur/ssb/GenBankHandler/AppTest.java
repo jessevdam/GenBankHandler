@@ -90,7 +90,7 @@ public class AppTest extends TestCase
   		in.close();
   		in = this.getClass().getResourceAsStream(file);
   		String orig = IOUtils.toString(in); 
-  		System.out.println(buf);
+  		//System.out.println(buf);
   		compareResToOrig(file,orig,buf.toString());
   	}
     
