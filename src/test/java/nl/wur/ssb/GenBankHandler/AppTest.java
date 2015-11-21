@@ -45,6 +45,7 @@ public class AppTest extends TestCase
     	this.runParseTest("/genbank2.gbk",true,true);
     	this.runParseTest("/genbank3.gbk",true,false);
     	this.runParseTest("/genbank4.gbk",true,false);
+    	this.runParseTest("/rast.gbk",true,false);
  	  }
    	private void compareResToOrig(String file,String orig,String newRes)
    	{
@@ -89,8 +90,29 @@ public class AppTest extends TestCase
   		in.close();
   		in = this.getClass().getResourceAsStream(file);
   		String orig = IOUtils.toString(in); 
-  		//System.out.println(buf);
+  		System.out.println(buf);
   		compareResToOrig(file,orig,buf.toString());
+  	}
+    
+    private void runParseWriteCrossTest(String file,boolean isGenbank,boolean allowBogus) throws Exception {
+  		InputStream in = this.getClass().getResourceAsStream(file);
+  		StringWriter buf = new StringWriter();
+  		RecordBuilder builder = new RecordBuilder();
+ 		  InsdcParser parser = null;
+ 		  if(isGenbank)
+ 		  	parser = new GenBankParser(in,builder);
+ 		  else
+ 		    parser = new EmblParser(in,builder);
+  		parser.parse(true);
+  		InsdcWriter writer = null;
+ 		  if(!isGenbank)
+ 		  	writer = new GenBankWriter(buf);
+ 		  else
+ 		  	writer = new EmblWriter(buf);
+  		
+  		//System.out.println("RECORDS = " + builder.getRecords().size());
+  		writer.writeRecord(builder.getRecords().get(0));
+  		in.close();
   	}
    	
     public void testParseWriting() throws Exception {
@@ -99,6 +121,18 @@ public class AppTest extends TestCase
     	this.runParseWriteTest("/embl4.gbk",false,false);
     	this.runParseWriteTest("/genbank3.gbk",true,false);
     	this.runParseWriteTest("/genbank4.gbk",true,false);
+    	this.runParseWriteTest("/rast.gbk",true,false);
+ 	  }
+    
+    public void testCrossWriting() throws Exception {
+ 		  //logger.info("process");
+    	this.runParseWriteCrossTest("/embl1.gbk",false,false);
+    	this.runParseWriteCrossTest("/embl4.gbk",false,false);
+    	//Journal line can not be translated to EMBL in this case
+    	//this.runParseWriteCrossTest("/genbank3.gbk",true,false);
+    	//his.runParseWriteCrossTest("/genbank4.gbk",true,false);
+    	//OC is missing in this case, rest is ok
+    	//this.runParseWriteCrossTest("/rast.gbk",true,false);
  	  }
 
 }

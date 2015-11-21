@@ -104,7 +104,8 @@ public class GenBankWriter extends InsdcWriter
     //_project_line(record); DEPRECATED
     if(record.dblinks != null)
     	this.writeMultiLine("DBLINK",StringUtils.join(record.dblinks," ").replaceAll(":",": "),false);
-  	this.writeMultiLine("KEYWORDS",StringUtils.join(record.keywords,"; ") + ".",false);
+    if(record.keywords != null)
+  	  this.writeMultiLine("KEYWORDS",StringUtils.join(record.keywords,"; ") + ".",false);
   	this.writeSingleLine("SEGMENT",record.segment,true);
   	this.writeMultiLine("SOURCE",record.source,true);
     _organism_line(record);
@@ -139,7 +140,7 @@ public class GenBankWriter extends InsdcWriter
   	  	this.writeMultiLine("",commentLines[i],false);
     }
     if(record.features.size() > 0)
-     	this.wrappedLine("FEATURES","Location/Qualifiers", GenBankWriter.GB_FEATURE_INDENT," ",false);
+     	this.wrappedLine("FEATURES","Location/Qualifiers", GenBankWriter.GB_FEATURE_INDENT," ",false,false);
     for(Feature feature : record.features)
         this.writeFeature(record,feature);
     //DEPRECATED
@@ -188,8 +189,8 @@ public class GenBankWriter extends InsdcWriter
     String circular = "linear";
     if(record.circular)
     	circular = "circular";
-    String date = InsdcParser.dateFormat.format(record.dates.get(record.dates.size() -1).date).toUpperCase();
-  	write(String.format("%-12s%-9s%19s%-4s%3s%-8s%-8s %s %s\n","LOCUS",record.locus,"" + record.size,residueType,strandType1,strandType2, circular,record.data_file_division,date));
+    String date = record.dates.size() == 0 ? "" : InsdcParser.dateFormat.format(record.dates.get(record.dates.size() -1).date).toUpperCase();
+  	write(String.format("%-12s%s%" + (28 - record.locus.length()) + "s%-4s%3s%-8s%-8s %s %s\n","LOCUS",record.locus,"" + record.size,residueType,strandType1,strandType2, circular,record.data_file_division,date));
   }
 
   public void _accession_line(Record record) throws Exception
@@ -212,6 +213,9 @@ public class GenBankWriter extends InsdcWriter
     /*Output for the VERSION line.
     */
   	//TODO what should we do with version line
+  	String accession = record.accessions.get(0).toString();
+  	if(accession.equals("unknown"))
+  		return;
   	String gi = "";
     if(record.gi != null)
       gi = "  GI:" + record.gi;
@@ -266,10 +270,13 @@ public class GenBankWriter extends InsdcWriter
     */
     // Now that species names can be too long, this line can wrap (Bug 2591)
     String org = record.organism;
-    if(org.length() > MAX_WIDTH - getBaseIndent())
+    if(org != null)
+    {
+      if(org.length() > MAX_WIDTH - getBaseIndent())
         org = Util.i(org,0,MAX_WIDTH - getBaseIndent() - 4) + "...";
-    this.writeSingleLine("  ORGANISM",org,false);
-    this.writeMultiLine(" ",StringUtils.join(record.taxonomy,"; ") + ".",false);
+      this.writeSingleLine("  ORGANISM",org,false);
+      this.writeMultiLine(" ",StringUtils.join(record.taxonomy,"; ") + ".",false);
+    }
   }
 
   public void _base_count_line(Record record) throws Exception
@@ -281,7 +288,7 @@ public class GenBankWriter extends InsdcWriter
         String toWrite = "";
         for(String base : record.baseCount.keySet())
         	toWrite += String.format("%7s %s", "" + record.baseCount.get(base), base);
-        this.writeMultiLine("BASE COUNT",toWrite,false);
+        this.writeSingleLine("BASE COUNT",toWrite,false);
     }
   }
         
@@ -305,7 +312,7 @@ public class GenBankWriter extends InsdcWriter
 			// to record a long sequence of NNNNNNN...NNN or whatever.
 			//TODO what should contig be like now its bogus
 			if (record.contigLocation != null)
-				this.wrappedLine("CONTIG",record.contigLocation,this.getBaseIndent(),",",false);
+				this.wrappedLine("CONTIG",record.contigLocation,this.getBaseIndent(),",",false,false);
 			else
 				_write_origin(record);
 		}
@@ -357,9 +364,9 @@ public class GenBankWriter extends InsdcWriter
   
   public void writeFeature(Record record,Feature feature) throws Exception
   {
-  	this.wrappedLine(FEATURE_KEY_INDENT + feature.key,feature.location.toString(record.size), GenBankWriter.GB_FEATURE_INDENT,",",false);
+  	this.wrappedLine(FEATURE_KEY_INDENT + feature.key,feature.location.toString(record.size), GenBankWriter.GB_FEATURE_INDENT,",",false,false);
     for(Qualifier qualifier : feature.qualifiers)
-      wrappedLine("","/" + qualifier.key + "=" + qualifier.value, GenBankWriter.GB_FEATURE_INDENT," ",false);
+      wrappedLine("","/" + qualifier.key + "=" + qualifier.value, GenBankWriter.GB_FEATURE_INDENT," ",false,true);
   }
 	
 }

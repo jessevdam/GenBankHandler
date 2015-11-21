@@ -40,7 +40,7 @@ public class GenBankParser extends InsdcParser
     String last = null;
     while(matcher.find())
     {
-    	counts.put(matcher.group(1).toLowerCase(),Integer.parseInt(matcher.group(2)));
+    	counts.put(matcher.group(2).toLowerCase(),Integer.parseInt(matcher.group(1)));
     	last = matcher.group(0);
     }
     if(last == null || !baseCounts.trim().endsWith(last))

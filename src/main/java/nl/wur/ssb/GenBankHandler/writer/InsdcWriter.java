@@ -50,7 +50,7 @@ public abstract class InsdcWriter
     		throw new ParseException("tag: " + tag + " can not be null");
     }
     else
-      wrappedLine(tag,text,this.getBaseIndent()," ",true);
+      wrappedLine(tag,text,this.getBaseIndent()," ",true,false);
   }
 
 	protected void writeMultiLine(String tag, String text,boolean canBeNull) throws Exception
@@ -61,7 +61,7 @@ public abstract class InsdcWriter
     		throw new ParseException("tag: " + tag + " can not be null");
     }
     else
-    	wrappedLine(tag,text,this.getBaseIndent()," ",false);
+    	wrappedLine(tag,text,this.getBaseIndent()," ",false,false);
   }
 	
 	protected String getResidueTypeText(Record record)
@@ -76,7 +76,7 @@ public abstract class InsdcWriter
 		return residueType;
 	}
 
-	protected void wrappedLine(String tag,String information, int indent, String split_char,boolean singleLine) throws Exception
+	protected void wrappedLine(String tag,String information, int indent, String split_char,boolean singleLine,boolean spaceToNextLine) throws Exception
 	{
     /*Write a line of GenBank info that can wrap over multiple lines.
 
@@ -112,9 +112,11 @@ public abstract class InsdcWriter
     // first get the information string split up by line
     ArrayList<String> output_parts = new ArrayList<String>();
     String cur_part = "";
-    for(String info_part : information.split(split_char))
+    int count = 0;
+    String parts[] = information.split(split_char);
+    for(String info_part : parts)
     {
-        if(cur_part.length() + 1 + info_part.length() > info_length)
+        if(cur_part.length() + 1 + (spaceToNextLine && parts.length - 1 != count ? 1 : 0) + info_part.length() > info_length)
         {
             if(!cur_part.equals(""))
             {
@@ -130,6 +132,7 @@ public abstract class InsdcWriter
             else
                 cur_part += split_char + info_part;
         }
+        count++;
     }
 
     // add the last bit of information to the output
@@ -140,16 +143,24 @@ public abstract class InsdcWriter
     	throw new ParseException("tag: " + tag + " should be one a single line : " + information);
     
     // now format the information string for return
-    write(output_parts.get(0) + "\n");
-    String indentStr = "";
-    if(this.getRePrintKey())
-    	indentStr = header;
-    else
-    	indentStr = rep(" ",indent);
-    output_parts.remove(0);
-    for(String output_part : output_parts)
+    if(singleLine)
     {
+    	write(information + "\n");
+    }
+    else
+    {
+      write(output_parts.get(0) + "\n");
+      String indentStr = "";
+      if(this.getRePrintKey())
+    	  indentStr = header;
+      else
+    	  indentStr = rep(" ",indent);
+      output_parts.remove(0);
+
+      for(String output_part : output_parts)
+      {
         write(indentStr + output_part + "\n");
+      }
     }
 	}	
 }

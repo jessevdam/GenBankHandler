@@ -432,7 +432,7 @@ public class RecordBuilder implements ParserConsumer2
 
 	public void recordEnd() throws Exception
 	{
-		this.rec.references.add(this.curRef);
+		this.flushReference();
 		records.add(this.rec);
 		this.curRef = null;
 		this.rec = null;

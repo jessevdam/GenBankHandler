@@ -95,9 +95,9 @@ public class EmblWriter extends InsdcWriter
   
   public void writeFeature(Record record,Feature feature) throws Exception
   {
-  	this.wrappedLine("FT   " + feature.key,feature.location.toString(record.size), QUALIFIER_INDENT,",",false);
+  	this.wrappedLine("FT   " + feature.key,feature.location.toString(record.size), QUALIFIER_INDENT,",",false,false);
     for(Qualifier qualifier : feature.qualifiers)
-      wrappedLine("FT","/" + qualifier.key + "=" + qualifier.value, QUALIFIER_INDENT," ",false);
+      wrappedLine("FT","/" + qualifier.key + "=" + qualifier.value, QUALIFIER_INDENT," ",false,true);
   }
   
 	public void _sequence_line(Record record) throws Exception
@@ -206,7 +206,7 @@ public class EmblWriter extends InsdcWriter
     		this.writeSingleLine("RX","" + crossRef.getDb() + "; " + crossRef.getId() + ".",false);  
     	this.writeMultiLine("RG",reference.consrtm,true);
     	if(reference.authors != null)
-    	  this.wrappedLine("RA",reference.authors + ";",this.getBaseIndent(),", ",false);
+    	  this.wrappedLine("RA",reference.authors + ";",this.getBaseIndent(),", ",false,false);
     	this.writeMultiLine("RT",(reference.title != null && !reference.title.equals("")) ? "\"" + reference.title + "\";" : ";",true);
     	if(reference.journal != null)
     	{
@@ -231,7 +231,7 @@ public class EmblWriter extends InsdcWriter
     //AH + AS lines
     if(record.features.size() > 0)
     {
-     	this.wrappedLine("FH   Key","Location/Qualifiers", QUALIFIER_INDENT," ",false);
+     	this.wrappedLine("FH   Key","Location/Qualifiers", QUALIFIER_INDENT," ",false,false);
      	write("FH\n");
       for(Feature feature : record.features)
         this.writeFeature(record,feature);
