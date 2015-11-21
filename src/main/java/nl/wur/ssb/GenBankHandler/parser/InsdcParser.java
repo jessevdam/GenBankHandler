@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public abstract class InsdcParser
 	private String lastKey = null;
   private String lastValue = null;
   private boolean allowBogus = true;
-  public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+  public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
   
 	private HashSet<String> dblinks = new HashSet<String>();
 	private HashSet<String> refNums = new HashSet<String>();

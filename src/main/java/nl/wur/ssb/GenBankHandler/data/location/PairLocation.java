@@ -33,4 +33,14 @@ public class PairLocation implements Location
 	{
 		return "" + begin.toString(1) + ".." + end.toString(0);
 	}
+	
+	public int getBeginPosition()
+	{
+	return this.begin.getMinPos();
+	}
+	
+	public int getEndPosition()
+	{
+	return this.end.getMaxPos();
+	}
 }

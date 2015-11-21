@@ -24,4 +24,13 @@ public class InBetweenPosition implements Location
 			end = 1;
 		return "" + position + "^" + end;
 	}
+	public int getBeginPosition()
+	{
+	  return this.position;		
+	}
+	public int getEndPosition()
+	{
+      //should be 0 if on end of circular dna
+      return this.position + 1;
+ 	}
 }
