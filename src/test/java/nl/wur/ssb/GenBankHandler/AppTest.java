@@ -37,16 +37,6 @@ public class AppTest extends TestCase
  		  //System.out.println(buf);
     }
     
-    public void testParsing() throws Exception {
- 		  //logger.info("process");
-    	this.runParseTest("/embl1.gbk",false,false);
-    	this.runParseTest("/embl4.gbk",false,false);
-    	this.runParseTest("/genbank1.gbk",true,true);
-    	this.runParseTest("/genbank2.gbk",true,true);
-    	this.runParseTest("/genbank3.gbk",true,false);
-    	this.runParseTest("/genbank4.gbk",true,false);
-    	this.runParseTest("/rast.gbk",true,false);
- 	  }
    	private void compareResToOrig(String file,String orig,String newRes)
    	{
    		int line = 0;
@@ -115,6 +105,18 @@ public class AppTest extends TestCase
   		in.close();
   	}
    	
+    public void testParsing() throws Exception {
+ 		  //logger.info("process");
+    	this.runParseTest("/embl1.gbk",false,false);
+    	this.runParseTest("/embl4.gbk",false,false);
+    	this.runParseTest("/genbank1.gbk",true,true);
+    	this.runParseTest("/genbank2.gbk",true,true);
+    	this.runParseTest("/genbank3.gbk",true,false);
+    	this.runParseTest("/genbank4.gbk",true,false);
+    	this.runParseTest("/rast.gbk",true,false);
+    	this.runParseTest("/rast2.gbk",true,true);
+ 	  }
+    
     public void testParseWriting() throws Exception {
  		  //logger.info("process");
     	this.runParseWriteTest("/embl1.gbk",false,false);

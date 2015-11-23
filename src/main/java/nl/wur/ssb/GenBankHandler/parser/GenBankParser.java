@@ -579,11 +579,13 @@ public class GenBankParser extends InsdcParser
                logger.warn(String.format("Minimal LOCUS line found - is this correct?\n:%r",line));
            this.bogus("Minimal truncated locus line encountered");
        }
-       else if(line.split("[\\s\\t\\n\\r\\f]+").length == 8 &&  set("aa", "bp").contains(line.split("[\\s\\t\\n\\r\\f]+")[3]) && set("linear", "circular").contains(line.split("[\\s\\t\\n\\r\\f]+")[5]))
+       else if(line.split("[\\s\\t\\n\\r\\f]+").length == 8 || line.split("[\\s\\t\\n\\r\\f]+").length == 7 &&  set("aa", "bp").contains(line.split("[\\s\\t\\n\\r\\f]+")[3]) && set("linear", "circular").contains(line.split("[\\s\\t\\n\\r\\f]+")[5]))
        {
-           // Cope with invalidly spaced GenBank LOCUS lines like
+           // Cope with invalidly spaced GenBank LOCUS lines like with date
            // LOCUS       AB070938          6497 bp    DNA     linear   BCT 11-OCT-2001
-           String splitline[] = line.split("[\\s\\t\\n\\r\\f]");
+      	   // or without date (Header from RAST genbank files)
+           // LOCUS       opera_scaffold_7        92652 bp    DNA     linear   UNK 
+           String splitline[] = line.split("[\\s\\t\\n\\r\\f]+");
            consumer.locus(splitline[1]);
            this.feedSize(Integer.parseInt(splitline[2]));
            feedResidueType(splitline[3]);
@@ -591,8 +593,9 @@ public class GenBankParser extends InsdcParser
            if(splitline[5].equals("circular"))
              consumer.circular();
            consumer.data_file_division(splitline[6]);
-           feedDate(splitline[7]);
-           this.bogus(String.format("Attempting to parse malformed locus line:\n%r\n Found locus %r size %r residue_type %r\n Some fields may be wrong.",
+           if(splitline.length == 8)
+             feedDate(splitline[7]);
+           this.bogus(String.format("Attempting to parse malformed locus line:\n%s\n Found locus %s size %s residue_type %s\n Some fields may be wrong.",
           		 line, splitline[1], splitline[2], splitline[4]));
        }
        else if(line.split("[\\s\\t\\n\\r\\f]+").length == 7 && set("aa", "bp").contains(line.split("[\\s\\t\\n\\r\\f]+")[3]))
@@ -605,7 +608,7 @@ public class GenBankParser extends InsdcParser
            // LOCUS       HG506_HG1000_1_PATCH 1219964 bp DNA HTG 18-JUN-2011
            // Notice that the "bp" can occur in the position expected by either
            // the old or the new fixed column standards (parsed above).
-           String splitline[] = line.split("[\\s\\t\\n\\r\\f]");
+           String splitline[] = line.split("[\\s\\t\\n\\r\\f]+");
            consumer.locus(splitline[1]);
            this.feedSize(Integer.parseInt(splitline[2]));
            feedResidueType(splitline[3]);
