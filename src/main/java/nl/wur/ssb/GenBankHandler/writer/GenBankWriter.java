@@ -365,8 +365,13 @@ public class GenBankWriter extends InsdcWriter
   public void writeFeature(Record record,Feature feature) throws Exception
   {
   	this.wrappedLine(FEATURE_KEY_INDENT + feature.key,feature.location.toString(record.size), GenBankWriter.GB_FEATURE_INDENT,",",false,false);
-    for(Qualifier qualifier : feature.qualifiers)
-      wrappedLine("","/" + qualifier.key + "=" + qualifier.value, GenBankWriter.GB_FEATURE_INDENT," ",false,true);
+    for(Qualifier qualifier : feature.getAllQualifiers())
+    {
+    	for(String val : qualifier.getValues())
+    	{
+        wrappedLine("","/" + qualifier.getKey() + "=" + val, GenBankWriter.GB_FEATURE_INDENT," ",false,true);
+    	}
+    }
   }
 	
 }

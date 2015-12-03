@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import nl.wur.ssb.GenBankHandler.data.Record;
 import nl.wur.ssb.GenBankHandler.data.ResidueType;
@@ -114,7 +115,17 @@ public abstract class InsdcWriter
     String cur_part = "";
     int count = 0;
     String parts[] = information.split(split_char);
+    LinkedList<String> newParts = new LinkedList<String>();
     for(String info_part : parts)
+    {
+      while(info_part.length() > info_length)
+      {
+      	newParts.add(info_part.substring(0,info_length));
+      	info_part = info_part.substring(info_length);
+      }
+      newParts.add(info_part);
+    }
+    for(String info_part : newParts)
     {
         if(cur_part.length() + 1 + (spaceToNextLine && parts.length - 1 != count ? 1 : 0) + info_part.length() > info_length)
         {

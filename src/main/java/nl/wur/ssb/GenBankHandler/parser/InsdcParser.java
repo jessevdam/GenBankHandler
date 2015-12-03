@@ -542,9 +542,10 @@ public abstract class InsdcParser
   	{
   		if(this.lastValue != null)
   		{
+  			this.lastValue = this.lastValue.replaceAll("\\n"," ");
   			if(this.lastKey.equals("translation"))
   				this.lastValue = this.lastValue.replaceAll(" ","");
-  		  consumer.featureQualifier(this.lastKey, this.lastValue.replaceAll("\\n"," "));
+  		  consumer.featureQualifier(this.lastKey, this.lastValue);
   		}
   		else
   			consumer.featureQualifier(this.lastKey, null);

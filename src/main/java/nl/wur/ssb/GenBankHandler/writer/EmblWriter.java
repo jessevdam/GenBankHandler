@@ -96,8 +96,11 @@ public class EmblWriter extends InsdcWriter
   public void writeFeature(Record record,Feature feature) throws Exception
   {
   	this.wrappedLine("FT   " + feature.key,feature.location.toString(record.size), QUALIFIER_INDENT,",",false,false);
-    for(Qualifier qualifier : feature.qualifiers)
-      wrappedLine("FT","/" + qualifier.key + "=" + qualifier.value, QUALIFIER_INDENT," ",false,true);
+    for(Qualifier qualifier : feature.getAllQualifiers())
+    {
+    	for(String val : qualifier.getValues())
+        wrappedLine("FT","/" + qualifier.getKey() + "=" + val, QUALIFIER_INDENT," ",false,true);
+    }
   }
   
 	public void _sequence_line(Record record) throws Exception

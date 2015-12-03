@@ -415,7 +415,7 @@ public class RecordBuilder implements ParserConsumer2
 
 	public void featureQualifier(String key, String value) throws Exception
 	{
-		this.curFeature.qualifiers.add(new Qualifier(key,value));		
+		this.curFeature.addQualifier(key,value);		
 	}
 
 	public void endFeature() throws Exception

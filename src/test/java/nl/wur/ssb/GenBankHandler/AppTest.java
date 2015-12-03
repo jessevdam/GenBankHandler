@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.io.StringWriter;
 
 import junit.framework.TestCase;
+import nl.wur.ssb.GenBankHandler.data.Feature;
+import nl.wur.ssb.GenBankHandler.data.Record;
 import nl.wur.ssb.GenBankHandler.data.RecordBuilder;
 import nl.wur.ssb.GenBankHandler.parser.EmblParser;
 import nl.wur.ssb.GenBankHandler.parser.GenBankParser;
@@ -116,6 +118,17 @@ public class AppTest extends TestCase
     	this.runParseTest("/rast.gbk",true,false);
     	this.runParseTest("/rast2.gbk",true,true);
  	  }
+    
+    public void testParseEmblSeqFeature()  throws Exception {
+ 		  InputStream in = this.getClass().getResourceAsStream("/embl1.gbk");
+ 		  InsdcParser parser = null;
+ 	 	  RecordBuilder builder = new RecordBuilder();
+	    parser = new EmblParser(in,builder);
+ 		  parser.parse(true);
+ 		  Record record = builder.getRecords().get(0);
+ 		  Feature feature = record.features.get(1);
+ 		  assert(!feature.getQualifier("translation").getValues().get(0).contains(" "));
+    }
     
     public void testParseWriting() throws Exception {
  		  //logger.info("process");
