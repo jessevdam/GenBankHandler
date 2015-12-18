@@ -57,10 +57,10 @@ public class EmblWriter extends InsdcWriter
 		if (record.circular)
 			circular = "circular";
 		String strandType = record.strandType != null ? record.strandType : "";
-		
+    // Get the taxonomy division		
 		String taxDivision = record.taxDivision != null ? record.taxDivision : "";
-		// Get the taxonomy division
-		String division = record.data_file_division;
+		//TODO find better name
+		String dataclass = record.data_file_division;
 		// ID <1>; SV <2>; <3>; <4>; <5>; <6>; <7> BP.
 		// 1. Primary accession number
 		// 2. Sequence version number
@@ -70,7 +70,7 @@ public class EmblWriter extends InsdcWriter
 		// 6. Taxonomic division
 		// 7. Sequence length
 		this.writeSingleLine("ID",String.format("%s; %s; %s; %s; %s; %s; %s %s.",
-				acc.getId(),subVersion,circular,strandType,taxDivision,division,"" + record.size,residueType),false);
+				acc.getId(),subVersion,circular,strandType,dataclass,taxDivision,"" + record.size,residueType),false);
 		write("XX\n");
 		String accession = "";
 		for (Accession item : record.accessions)
@@ -164,6 +164,8 @@ public class EmblWriter extends InsdcWriter
     ArrayList<CrossRef> dbLinks = new ArrayList<CrossRef>();
     if(record.dblinks != null)
       dbLinks.addAll(record.dblinks);
+    if(record.pid != null)
+      this.writeSingleLine("PR","Project:" + record.pid + ";",false);
     for(CrossRef link : dbLinks)
     {
     	if(link.getDb().equals("Project"))
