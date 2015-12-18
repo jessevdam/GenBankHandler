@@ -10,7 +10,6 @@ import nl.wur.ssb.GenBankHandler.data.Feature;
 import nl.wur.ssb.GenBankHandler.data.Qualifier;
 import nl.wur.ssb.GenBankHandler.data.Record;
 import nl.wur.ssb.GenBankHandler.data.Reference;
-import nl.wur.ssb.GenBankHandler.data.ResidueType;
 import nl.wur.ssb.GenBankHandler.data.location.Accession;
 import nl.wur.ssb.GenBankHandler.data.location.RefLocation;
 import nl.wur.ssb.GenBankHandler.parser.InsdcParser;
@@ -54,10 +53,11 @@ public class EmblWriter extends InsdcWriter
 		String circular = "linear";
 		if (record.isCircular())
 			circular = "circular";
-		
+
+    // Get the taxonomy division		
 		String taxDivision = record.taxDivision != null ? record.taxDivision : "";
-		// Get the taxonomy division
-		String division = record.data_file_division;
+		//TODO find better name
+		String dataclass = record.data_file_division;
 		// ID <1>; SV <2>; <3>; <4>; <5>; <6>; <7> BP.
 		// 1. Primary accession number
 		// 2. Sequence version number
@@ -67,7 +67,7 @@ public class EmblWriter extends InsdcWriter
 		// 6. Taxonomic division
 		// 7. Sequence length
 		this.writeSingleLine("ID",String.format("%s; %s; %s; %s; %s; %s; %s %s.",
-				acc.getId(),subVersion,circular,record.getStrandType().toString(),taxDivision,division,"" + record.getSize(),record.getResidueType().toString()),false);
+  	acc.getId(),subVersion,circular,record.getStrandType().toString(),dataclass,taxDivision,"" + record.getSize(),record.getResidueType().toString()),false);
 		write("XX\n");
 		String accession = "";
 		for (Accession item : record.accessions)
@@ -161,6 +161,8 @@ public class EmblWriter extends InsdcWriter
     ArrayList<CrossRef> dbLinks = new ArrayList<CrossRef>();
     if(record.dblinks != null)
       dbLinks.addAll(record.dblinks);
+    if(record.pid != null)
+      this.writeSingleLine("PR","Project:" + record.pid + ";",false);
     for(CrossRef link : dbLinks)
     {
     	if(link.getDb().equals("Project"))
