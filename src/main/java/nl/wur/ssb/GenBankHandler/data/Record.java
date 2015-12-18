@@ -4,23 +4,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import nl.wur.ssb.GenBankHandler.data.location.Accession;
+import nl.wur.ssb.GenBankHandler.data.location.Location;
 
 public class Record
 {
   //The name specified after the LOCUS keyword in the GenBank
   //record. This may be the accession number, or a clone id or something else.
-	public String locus;
+	private String locus;
   //The size of the sequence within the record
-	public int size = -1;
+	int size = -1;
 
   //its either dna(4 codes), codon(64 codes) coding or protein(~20 codes)
-	public ResidueType residueType;
+	ResidueType residueType;
+	//Strand multiplicity (optional field only for genbank)
+	StrandMultiplicity strandMultiplicity = StrandMultiplicity.NONE;
   //The type of residues making up the sequence in this
   //record. Normally something like RNA, DNA or PROTEIN, but may be as
   //esoteric as 'ss-RNA circular'.
-	public String strandType;
+	StrandType strandType = StrandType.NONE;
 	//is this sequence circular
-  public boolean circular;	
+  boolean circular;	
 	//The date of submission of the record, in a form like '28-JUL-1998'
 	public ArrayList<DateVersion> dates = new ArrayList<DateVersion>();
 	//EMBL only taxonomic division
@@ -29,7 +32,7 @@ public class Record
   //GenBank (ie. PLN -> plants; PRI -> humans, primates; BCT -> bacteria...)
 	public String data_file_division;
   //the sequence
-	public String sequence;
+	private String sequence;
   //optional extra information of this contig
 	//TODO find its definition
 	public String contigLocation;
@@ -80,8 +83,70 @@ public class Record
 
 	public ArrayList<Feature> features;
 	
-	public Record()
+	Record()
 	{
 		
+	}
+	
+	public Record(String locus,ResidueType residueType,StrandType strandType,boolean isCircular)
+	{
+		this.locus = locus;
+		this.residueType = residueType;
+		this.strandType = strandType;
+		this.circular = isCircular;
+	}
+	
+	public String getLocus()
+	{
+		return locus;
+	}
+
+	public void setLocus(String locus)
+	{
+		this.locus = locus;
+	}	
+
+	public int getSize()
+	{
+		return size;
+	}
+
+	public String getSequence()
+	{
+		return sequence;
+	}
+	
+	public void setSequence(String sequence)
+	{
+		//TODO validate the sequence characters
+		this.sequence = sequence;
+		this.size = sequence.length();
+	}
+
+	public ResidueType getResidueType()
+	{
+		return residueType;
+	}
+
+	public StrandType getStrandType()
+	{
+		return strandType;
+	}
+
+	public boolean isCircular()
+	{
+		return circular;
+	}
+	
+	public StrandMultiplicity getStrandMultiplicity()
+	{
+		return strandMultiplicity;
+	}
+
+	public Feature addFeature(String key,Location location)
+	{
+		Feature toRet = new Feature(this,key,location);
+		this.features.add(toRet);
+		return toRet;
 	}
 }

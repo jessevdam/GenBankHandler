@@ -176,21 +176,12 @@ public class GenBankWriter extends InsdcWriter
       67:68      space
       68:79      Date, in the form dd-MMM-yyyy (e.g., 15-MAR-1991)
     */
-  	String residueType = " " + this.getResidueTypeText(record).toLowerCase() + " ";
-    String strandType = record.strandType != null ? record.strandType : "";
-    String strandType1 = "";
-    String strandType2 = strandType;
-    if(strandType.indexOf("-") != -1)
-    {
-    	String tmp[] = strandType.split("\\-",2);
-    	strandType1 = tmp[0] + "-";
-    	strandType2 = tmp[1];
-    }
+  	String residueType = " " + record.getResidueType().toString().toLowerCase() + " ";
     String circular = "linear";
-    if(record.circular)
+    if(record.isCircular())
     	circular = "circular";
-    String date = record.dates.size() == 0 ? "" : InsdcParser.dateFormat.format(record.dates.get(record.dates.size() -1).date).toUpperCase();
-  	write(String.format("%-12s%s%" + (28 - record.locus.length()) + "s%-4s%3s%-8s%-8s %s %s\n","LOCUS",record.locus,"" + record.size,residueType,strandType1,strandType2, circular,record.data_file_division,date));
+    String date = record.dates.size() == 0 ? "" : InsdcParser.dateFormat.format(record.dates.get(record.dates.size() -1).getDate()).toUpperCase();
+  	write(String.format("%-12s%s%" + (28 - record.getLocus().length()) + "s%-4s%3s%-8s%-8s %s %s\n","LOCUS",record.getLocus(),"" + record.getSize(),residueType,record.getStrandMultiplicity().toPrefix(),record.getStrandType().toString(), circular,record.data_file_division,date));
   }
 
   public void _accession_line(Record record) throws Exception
@@ -306,7 +297,7 @@ public class GenBankWriter extends InsdcWriter
 		
 		// Loosely based on code from Howard Salis
 		
-		if (record.sequence == null)
+		if (record.getSequence() == null)
 		{
 			// We have already recorded the length, and there is no need
 			// to record a long sequence of NNNNNNN...NNN or whatever.
@@ -320,7 +311,7 @@ public class GenBankWriter extends InsdcWriter
 		{
 			_write_origin(record);
 			int cur_seq_pos = 0;
-			while (cur_seq_pos < record.sequence.length())
+			while (cur_seq_pos < record.getSequence().length())
 			{
 				write(String.format(GenBankWriter.SEQUENCE_FORMAT,"" + (cur_seq_pos + 1)));
 				
@@ -328,11 +319,11 @@ public class GenBankWriter extends InsdcWriter
 				{
 					int start_pos = cur_seq_pos + section * 10;
 					int end_pos = start_pos + 10;
-					String seq_section = Util.i(record.sequence,start_pos,end_pos);
+					String seq_section = Util.i(record.getSequence(),start_pos,end_pos);
 					write(String.format(" %s",seq_section.toLowerCase()));
 					
 					// stop looping if we are out of sequence
-					if (end_pos > record.sequence.length())
+					if (end_pos > record.getSize())
 						break;
 				}
 				
@@ -364,10 +355,10 @@ public class GenBankWriter extends InsdcWriter
   
   public void writeFeature(Record record,Feature feature) throws Exception
   {
-  	this.wrappedLine(FEATURE_KEY_INDENT + feature.key,feature.location.toString(record.size), GenBankWriter.GB_FEATURE_INDENT,",",false,false);
+  	this.wrappedLine(FEATURE_KEY_INDENT + feature.getKey(),feature.getLocationString(), GenBankWriter.GB_FEATURE_INDENT,",",false,false);
     for(Qualifier qualifier : feature.getAllQualifiers())
     {
-    	for(String val : qualifier.getValues())
+    	for(String val : qualifier.getValuesAsStrings())
     	{
         wrappedLine("","/" + qualifier.getKey() + "=" + val, GenBankWriter.GB_FEATURE_INDENT," ",false,true);
     	}

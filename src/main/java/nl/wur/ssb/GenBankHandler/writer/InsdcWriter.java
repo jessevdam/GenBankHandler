@@ -65,18 +65,6 @@ public abstract class InsdcWriter
     	wrappedLine(tag,text,this.getBaseIndent()," ",false,false);
   }
 	
-	protected String getResidueTypeText(Record record)
-	{
-		String residueType = "";
-		if (record.residueType == ResidueType.DNA)
-			residueType = "BP";
-		else if (record.residueType == ResidueType.PROTEIN)
-			residueType = "AA";
-		else
-			residueType = "RC";		
-		return residueType;
-	}
-
 	protected void wrappedLine(String tag,String information, int indent, String split_char,boolean singleLine,boolean spaceToNextLine) throws Exception
 	{
     /*Write a line of GenBank info that can wrap over multiple lines.

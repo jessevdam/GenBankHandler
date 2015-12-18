@@ -31,13 +31,15 @@ public class RecordBuilder implements ParserConsumer2
 	private Stack<Location> stack = new Stack<Location>();
 	private ArrayList<Record> records = new ArrayList<Record>();
 	private HashMap<String,Accession> accessions = new HashMap<String,Accession>();
+	private String featureKey = null;
+	private Location location = null;
 	
 	public void locus(String locus) throws Exception
 	{
 		if(rec != null)
 			throw new ParseException("Previous record not closed");
 		rec = new Record();
-		rec.locus = locus;
+		rec.setLocus(locus);
 	}
 	
 	// The size of the sequence within the record
@@ -65,10 +67,11 @@ public class RecordBuilder implements ParserConsumer2
 
 	public void sequence(String sequence) throws Exception
 	{
-		if(rec.sequence != null)
+		if(rec.getSequence() != null)
 			throw new ParseException("sequence can only be given once");
-		rec.sequence = sequence;
-		
+		if(rec.getSize() != -1 && rec.getSize() != sequence.length())
+			throw new ParseException("given sequence size does not match with sequence size");
+		rec.setSequence(sequence);		
 	}
 
 	public void contigLocation(String contigLocation) throws Exception
@@ -290,24 +293,26 @@ public class RecordBuilder implements ParserConsumer2
 
 	public void startFeature(String key) throws Exception
 	{
-		if(curFeature != null)
+		if(curFeature != null && this.featureKey != null)
 			throw new ParseException("last feature not closed");
-		curFeature = new Feature(key);
-		this.rec.features.add(curFeature);
+		this.featureKey = key;
 	}
 
 	public void startLocation() throws Exception
 	{
-    if(this.curFeature == null)
+    if(this.featureKey == null)
     	throw new ParseException("location start before feature has started");
 	}
 
 	public void endLocation() throws Exception
 	{
-	  if(this.curFeature.location == null)
-	  	throw new ParseException("feature should have location at the end");
 	  if(stack.size() != 0)
 	  	throw new ParseException("Stack != 0 at end op location parsing");
+	  if(this.curFeature != null)
+	  	throw new ParseException("only one location allowed for a feature");
+		this.curFeature = this.rec.addFeature(this.featureKey,this.location);
+		this.featureKey = null;
+		this.location = null;
 	}
 	
 	public void pushLocation(Location location) throws Exception
@@ -320,7 +325,7 @@ public class RecordBuilder implements ParserConsumer2
 	{
     if(stack.size() == 0)
     	throw new ParseException("location pop stack.size() == 0");
-    this.curFeature.location = stack.pop();
+    this.location = stack.pop();
 	}
 
 	public void startCompoundLocation(String command) throws Exception
@@ -413,7 +418,7 @@ public class RecordBuilder implements ParserConsumer2
 		
 	}
 
-	public void featureQualifier(String key, String value) throws Exception
+	public void featureQualifier(String key, QualifierValue value) throws Exception
 	{
 		this.curFeature.addQualifier(key,value);		
 	}
@@ -452,9 +457,9 @@ public class RecordBuilder implements ParserConsumer2
 	// The type of residues making up the sequence in this
 	// record. Normally something like RNA, DNA or PROTEIN, but may be as
 	// esoteric as 'ss-RNA circular'.
-	public void strandType(String type) throws Exception
+	public void strandType(StrandType type) throws Exception
 	{
-		if(rec.strandType != null)
+		if(rec.strandType != StrandType.NONE)
 			throw new ParseException("residue_type can only be given once");
 		rec.strandType = type;		
 	}
@@ -476,5 +481,12 @@ public class RecordBuilder implements ParserConsumer2
 		if(rec.organelle != null)
 			throw new ParseException("organelle can only be given once");
 		rec.organelle = organelle;	
+	}
+
+	public void strandMultiplicity(StrandMultiplicity multiplicity) throws Exception
+	{
+		if(rec.getStrandMultiplicity() != StrandMultiplicity.NONE)
+			throw new ParseException("record can only have one strand multiplicity");
+		rec.strandMultiplicity = multiplicity;
 	}
 }

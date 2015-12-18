@@ -4,7 +4,7 @@ package nl.wur.ssb.GenBankHandler.data.location;
 
 public class ExactPosition implements Position
 {
-	public int position;
+	private int position;
 	public ExactPosition(int position)
 	{
 		this.position = position;

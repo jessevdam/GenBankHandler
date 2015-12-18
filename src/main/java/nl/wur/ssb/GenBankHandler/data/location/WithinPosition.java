@@ -2,9 +2,9 @@ package nl.wur.ssb.GenBankHandler.data.location;
 
 public class WithinPosition implements Position
 {
-  public int def;
-  public int start;
-  public int end;
+  private int def;
+  private int start;
+  private int end;
   
   public WithinPosition(int def, int start, int end)
   {

@@ -7,8 +7,8 @@ import nl.wur.ssb.GenBankHandler.util.Util;
 
 public class CompoundLocation implements Location
 {
-	public String command; //join|order|bond
-	public ArrayList<Location> elements;
+	private String command; //join|order|bond
+	private ArrayList<Location> elements;
 	public CompoundLocation(String command)
 	{
 		this.command = command;

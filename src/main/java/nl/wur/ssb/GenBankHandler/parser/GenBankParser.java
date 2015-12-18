@@ -10,7 +10,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import nl.wur.ssb.GenBankHandler.data.ResidueType;
+import nl.wur.ssb.GenBankHandler.data.StrandMultiplicity;
+import nl.wur.ssb.GenBankHandler.data.StrandType;
 import nl.wur.ssb.GenBankHandler.util.Util;
 
 import org.apache.commons.lang.StringUtils;
@@ -480,7 +481,7 @@ public class GenBankParser extends InsdcParser
            this.feedSize(Integer.parseInt(name_and_length[1]));
            // consumer.residue_type(i(line,33,41).trim())
            feedResidueType(i(line,29,33).trim());
-           consumer.strandType(i(line,33,41).trim());
+           consumer.strandType(StrandType.fromStringChecked(i(line,33,41).trim()));
            
            if(isCircular.equals("circular"))
           	 consumer.circular();
@@ -543,7 +544,8 @@ public class GenBankParser extends InsdcParser
            this.feedSize(Integer.parseInt(name_and_length[1]));
 
            feedResidueType(residue);
-           consumer.strandType(strandTypePart1+strandTypePart2);
+           consumer.strandMultiplicity(StrandMultiplicity.fromStringChecked(strandTypePart1.replaceAll("-","").trim()));
+           consumer.strandType(StrandType.fromStringChecked(strandTypePart2));
            
            if(circular.equals("circular"))
           	 consumer.circular();
@@ -589,7 +591,7 @@ public class GenBankParser extends InsdcParser
            consumer.locus(splitline[1]);
            this.feedSize(Integer.parseInt(splitline[2]));
            feedResidueType(splitline[3]);
-           consumer.strandType(splitline[4].trim());
+           parseFullStrandType(splitline[4]);
            if(splitline[5].equals("circular"))
              consumer.circular();
            consumer.data_file_division(splitline[6]);
@@ -612,7 +614,7 @@ public class GenBankParser extends InsdcParser
            consumer.locus(splitline[1]);
            this.feedSize(Integer.parseInt(splitline[2]));
            feedResidueType(splitline[3]);
-           consumer.strandType(splitline[4].trim());
+           parseFullStrandType(splitline[4]);
            consumer.data_file_division(splitline[5]);
            feedDate(splitline[6]);
        }
@@ -638,6 +640,22 @@ public class GenBankParser extends InsdcParser
            throw new ParseException("Did not recognise the LOCUS line layout:\n" + line);
        }
 	}
-	
+	private void parseFullStrandType(String strandType) throws Exception
+	{
+		String tmp[] = strandType.trim().split("-");
+		if(tmp.length == 2)
+		{
+			consumer.strandMultiplicity(StrandMultiplicity.fromStringChecked(tmp[0]));
+			consumer.strandType(StrandType.fromStringChecked(tmp[1]));
+		}
+		else if(tmp.length == 1)
+		{
+			consumer.strandType(StrandType.fromStringChecked(tmp[0]));
+		}
+		else
+		{
+			throw new ParseException("could not parse strand multiplicity + strand type");
+		}
+	}
 
 }

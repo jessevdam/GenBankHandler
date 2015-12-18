@@ -59,6 +59,8 @@ public class Util
   }
 	public static String i(String s,int begin,int end)
 	{
+		if(s == null)
+			return null;
 		int len = s.length();
 		if(begin < 0)
 			begin += len;

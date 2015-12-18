@@ -7,25 +7,30 @@ import nl.wur.ssb.GenBankHandler.data.location.Location;
 
 public class Feature
 {
-	public String key;
-	public Location location;
+	private Record record;
+	private String key;
+	private Location location;
 	private LinkedHashMap<String,Qualifier> qualifiers = new LinkedHashMap<String,Qualifier>();
-	public Feature(String key)
+	Feature(Record record,String key,Location location)
 	{
 		this.key = key;
+		this.record = record;
+		this.location = location;
 	}
 	
-	public void addQualifier(String key,String val)
+	public Qualifier addQualifier(String key,QualifierValue val)
 	{
 		Qualifier qual = this.qualifiers.get(key);
 		if(qual == null)
 		{
-			qualifiers.put(key,new Qualifier(key,val));
+			qual = new Qualifier(key,val);
+			qualifiers.put(key,qual);
 		}
 		else
 		{
 			qual.addValue(val);
 		}
+		return qual;
 	}
 	public Qualifier getQualifier(String key)
 	{
@@ -34,5 +39,17 @@ public class Feature
 	public Collection<Qualifier> getAllQualifiers()
 	{
 		return this.qualifiers.values();
+	}
+	public String getKey()
+	{
+		return this.key;
+	}
+	public Location getLocation()
+	{
+		return this.location;
+	}
+	public String getLocationString()
+	{
+		return this.location.toString(this.record.getSize());
 	}
 }

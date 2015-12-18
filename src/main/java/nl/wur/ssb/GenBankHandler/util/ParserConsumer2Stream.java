@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import nl.wur.ssb.GenBankHandler.data.QualifierValue;
 import nl.wur.ssb.GenBankHandler.data.ResidueType;
+import nl.wur.ssb.GenBankHandler.data.StrandMultiplicity;
+import nl.wur.ssb.GenBankHandler.data.StrandType;
 import nl.wur.ssb.GenBankHandler.parser.ParserConsumer2;
 
 import org.apache.commons.lang.StringUtils;
@@ -311,7 +314,7 @@ public class ParserConsumer2Stream implements ParserConsumer2
      writeln("oneOf: def = " + def + " posisitons = (" + StringUtils.join(positions,",") + ")");
   }
 
-	public void featureQualifier(String key, String value) throws Exception
+	public void featureQualifier(String key, QualifierValue value) throws Exception
 	{
      writeln("featureQualifier: " + key + " = " + value);
   }
@@ -336,7 +339,7 @@ public class ParserConsumer2Stream implements ParserConsumer2
 		writeln("residueType: " + type);		
 	}
 
-	public void strandType(String type) throws Exception
+	public void strandType(StrandType type) throws Exception
 	{	
 		writeln("strandType: " + type);				
 	}
@@ -354,5 +357,10 @@ public class ParserConsumer2Stream implements ParserConsumer2
 	public void organelle(String organelle) throws Exception
 	{
 		writeln("organelle: " + organelle);		
+	}
+
+	public void strandMultiplicity(StrandMultiplicity multiplicity) throws Exception
+	{
+		writeln("strand multiplicity: " + multiplicity);				
 	}
 }

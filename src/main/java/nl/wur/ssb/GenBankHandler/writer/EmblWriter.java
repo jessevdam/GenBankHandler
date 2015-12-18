@@ -51,12 +51,9 @@ public class EmblWriter extends InsdcWriter
 		if (acc.getVersion() != 0)
 			subVersion = "SV " + acc.getVersion();
 		
-		String residueType = this.getResidueTypeText(record);
-		
 		String circular = "linear";
-		if (record.circular)
+		if (record.isCircular())
 			circular = "circular";
-		String strandType = record.strandType != null ? record.strandType : "";
 		
 		String taxDivision = record.taxDivision != null ? record.taxDivision : "";
 		// Get the taxonomy division
@@ -70,7 +67,7 @@ public class EmblWriter extends InsdcWriter
 		// 6. Taxonomic division
 		// 7. Sequence length
 		this.writeSingleLine("ID",String.format("%s; %s; %s; %s; %s; %s; %s %s.",
-				acc.getId(),subVersion,circular,strandType,taxDivision,division,"" + record.size,residueType),false);
+				acc.getId(),subVersion,circular,record.getStrandType().toString(),taxDivision,division,"" + record.getSize(),record.getResidueType().toString()),false);
 		write("XX\n");
 		String accession = "";
 		for (Accession item : record.accessions)
@@ -87,19 +84,19 @@ public class EmblWriter extends InsdcWriter
     for(DateVersion dateVersion : record.dates)
     {
     	String comment = "";
-    	if(dateVersion.comment != null)
-    		comment = " (" + dateVersion.comment + ")";
-    	this.writeSingleLine("DT",InsdcParser.dateFormat.format(dateVersion.date).toUpperCase() + comment,false);
+    	if(dateVersion.getComment() != null)
+    		comment = " (" + dateVersion.getComment() + ")";
+    	this.writeSingleLine("DT",InsdcParser.dateFormat.format(dateVersion.getDate()).toUpperCase() + comment,false);
     }
   }
   
   public void writeFeature(Record record,Feature feature) throws Exception
   {
-  	this.wrappedLine("FT   " + feature.key,feature.location.toString(record.size), QUALIFIER_INDENT,",",false,false);
+  	this.wrappedLine("FT   " + feature.getKey(),feature.getLocationString(), QUALIFIER_INDENT,",",false,false);
     for(Qualifier qualifier : feature.getAllQualifiers())
     {
-    	for(String val : qualifier.getValues())
-        wrappedLine("FT","/" + qualifier.getKey() + "=" + val, QUALIFIER_INDENT," ",false,true);
+    	for(String val : qualifier.getValuesAsStrings())
+        wrappedLine("FT","/" + qualifier.getKey() + "=" + val + "", QUALIFIER_INDENT," ",false,true);
     }
   }
   
@@ -108,9 +105,9 @@ public class EmblWriter extends InsdcWriter
 		/* Output for all of the sequence. */
 		
 		// Loosely based on code from Howard Salis
-		if (record.sequence != null)
+		if (record.getSequence() != null)
 		{
-			String line = "Sequence " + record.size + " " + this.getResidueTypeText(record) + ";";
+			String line = "Sequence " + record.getSize() + " " + record.getResidueType().toString() + ";";
 			if(record.baseCount != null)
 			{
 				for(String key : record.baseCount.keySet())
@@ -125,27 +122,27 @@ public class EmblWriter extends InsdcWriter
 			}
 			this.writeSingleLine("SQ",line,false);
 			
-	    for(int line_number = 0;line_number < (record.size / LETTERS_PER_LINE);line_number++)
+	    for(int line_number = 0;line_number < (record.getSize() / LETTERS_PER_LINE);line_number++)
 	    {
 	        write("     "); //5
 	        for(int block = 0;block < BLOCKS_PER_LINE;block++)
 	        {
 	            int index = LETTERS_PER_LINE * line_number + LETTERS_PER_BLOCK * block;
-	            write(Util.i(record.sequence,index,index + LETTERS_PER_BLOCK) + " ");
+	            write(Util.i(record.getSequence(),index,index + LETTERS_PER_BLOCK) + " ");
 	        }
 	        write(String.format("%" + (POSITION_PADDING - 1) + "s\n","" + ((line_number + 1) * LETTERS_PER_LINE)));
 	    }
-	    if(record.size % LETTERS_PER_LINE != 0)
+	    if(record.getSize() % LETTERS_PER_LINE != 0)
 	    {
 	        // Final (partial) line
-	        int line_number = (record.size / LETTERS_PER_LINE);
+	        int line_number = (record.getSize() / LETTERS_PER_LINE);
 	        write("     "); //5
 	        for(int block = 0;block < BLOCKS_PER_LINE;block++)
 	        {
 	            int index = LETTERS_PER_LINE * line_number + LETTERS_PER_BLOCK * block;
-	            write(String.format("%-11s",Util.i(record.sequence,index,index + LETTERS_PER_BLOCK)));
+	            write(String.format("%-11s",Util.i(record.getSequence(),index,index + LETTERS_PER_BLOCK)));
 	        }
-	        write(String.format("%" + (POSITION_PADDING - 1) + "s\n","" + record.size));
+	        write(String.format("%" + (POSITION_PADDING - 1) + "s\n","" + record.getSize()));
 	    }
 		}
 		else if(record.contigLocation != null)
@@ -204,7 +201,7 @@ public class EmblWriter extends InsdcWriter
        	this.writeSingleLine("RN","[" + reference.id + "]",false);
       this.writeMultiLine("RC",reference.remark,true);
     	for(RefLocation loc : reference.locations)
-    		this.writeSingleLine("RP","" + (loc.start + 1) + "-" + loc.end,false);    
+    		this.writeSingleLine("RP","" + (loc.getStart() + 1) + "-" + loc.getEnd(),false);    
     	for(CrossRef crossRef : reference.crossRefs)
     		this.writeSingleLine("RX","" + crossRef.getDb() + "; " + crossRef.getId() + ".",false);  
     	this.writeMultiLine("RG",reference.consrtm,true);

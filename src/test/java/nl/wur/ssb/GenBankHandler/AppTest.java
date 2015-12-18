@@ -82,7 +82,7 @@ public class AppTest extends TestCase
   		in.close();
   		in = this.getClass().getResourceAsStream(file);
   		String orig = IOUtils.toString(in); 
-  		//System.out.println(buf);
+  		System.out.println(buf);
   		compareResToOrig(file,orig,buf.toString());
   	}
     
@@ -127,7 +127,7 @@ public class AppTest extends TestCase
  		  parser.parse(true);
  		  Record record = builder.getRecords().get(0);
  		  Feature feature = record.features.get(1);
- 		  assert(!feature.getQualifier("translation").getValues().get(0).contains(" "));
+ 		  assert(!feature.getQualifier("translation").getValues().get(0).getVal().contains(" "));
     }
     
     public void testParseWriting() throws Exception {

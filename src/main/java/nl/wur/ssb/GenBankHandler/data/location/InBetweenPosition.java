@@ -4,7 +4,7 @@ import nl.wur.ssb.GenBankHandler.parser.ParseException;
 
 public class InBetweenPosition implements Location
 {
-	public int position;
+	private int position;
 	public InBetweenPosition(int position)
 	{
 		this.position = position;

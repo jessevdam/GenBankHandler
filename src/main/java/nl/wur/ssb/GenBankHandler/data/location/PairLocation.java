@@ -4,8 +4,8 @@ import nl.wur.ssb.GenBankHandler.parser.ParseException;
 
 public class PairLocation implements Location
 {
-	public Position begin;
-	public Position end;
+	private Position begin;
+	private Position end;
 	public PairLocation()
 	{
 		

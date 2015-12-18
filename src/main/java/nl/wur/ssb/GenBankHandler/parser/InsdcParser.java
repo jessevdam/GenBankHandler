@@ -13,7 +13,9 @@ import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import nl.wur.ssb.GenBankHandler.data.QualifierValue;
 import nl.wur.ssb.GenBankHandler.data.ResidueType;
+import nl.wur.ssb.GenBankHandler.data.TextQualifierValue;
 import nl.wur.ssb.GenBankHandler.util.Util;
 
 import org.apache.commons.lang.StringUtils;
@@ -503,7 +505,6 @@ public abstract class InsdcParser
                     // Quoted...
                     while(!value.endsWith("\""))
                     	value = value + "\n" + iterator.next();
-
                     // DO NOT remove the quotes...
                     putQualifierSet(key, value);
                 }
@@ -545,7 +546,10 @@ public abstract class InsdcParser
   			this.lastValue = this.lastValue.replaceAll("\\n"," ");
   			if(this.lastKey.equals("translation"))
   				this.lastValue = this.lastValue.replaceAll(" ","");
-  		  consumer.featureQualifier(this.lastKey, this.lastValue);
+  			if(this.lastValue != null && this.lastValue.startsWith("\"") && this.lastValue.endsWith("\""))
+  		    consumer.featureQualifier(this.lastKey, new TextQualifierValue(i(this.lastValue,1,-1)));
+  			else
+  			  consumer.featureQualifier(this.lastKey, new QualifierValue(this.lastValue));
   		}
   		else
   			consumer.featureQualifier(this.lastKey, null);

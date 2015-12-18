@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import nl.wur.ssb.GenBankHandler.data.ResidueType;
+import nl.wur.ssb.GenBankHandler.data.StrandType;
 import nl.wur.ssb.GenBankHandler.util.Util;
 
 import org.apache.commons.lang.StringUtils;
@@ -346,7 +347,7 @@ public class EmblParser extends InsdcParser
     if(tmp.indexOf("circular") != -1)
     	consumer.circular();
     tmp = tmp.replaceAll("circular","").replaceAll("linear","").trim();
-    consumer.strandType(tmp);
+    consumer.strandType(StrandType.fromStringChecked(tmp));
     consumer.data_file_division(fields[2]);
   }
   
@@ -402,12 +403,10 @@ public class EmblParser extends InsdcParser
     assert(set("", "linear", "circular").contains(circular)) : "LOCUS line does not contain valid entry (linear, circular, ...):\n" + line;
     if(circular.equals("circular"))
       consumer.circular();
-    consumer.strandType(fields.get(3));
+    consumer.strandType(StrandType.fromStringChecked(fields.get(3).trim()));
     consumer.taxDivision(fields.get(4)); 
     consumer.data_file_division(fields.get(5));
-    
-
-    
+       
     // TODO - How to deal with the version field?  At the moment the consumer
     // will try and use this for the ID which isn't ideal for EMBL files.
     int suffixVersion = 0;

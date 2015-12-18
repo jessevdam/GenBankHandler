@@ -4,7 +4,7 @@ import nl.wur.ssb.GenBankHandler.parser.ParseException;
 
 public class SoloLocation implements Location
 {
-	public Position pos;
+	private Position pos;
 	
 	public SoloLocation()
 	{

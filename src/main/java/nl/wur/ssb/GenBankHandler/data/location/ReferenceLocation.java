@@ -4,8 +4,8 @@ import nl.wur.ssb.GenBankHandler.parser.ParseException;
 
 public class ReferenceLocation implements Location
 {
-	public String reference;
-	public Location location;
+	private String reference;
+	private Location location;
 	
 	public ReferenceLocation(String reference)
 	{

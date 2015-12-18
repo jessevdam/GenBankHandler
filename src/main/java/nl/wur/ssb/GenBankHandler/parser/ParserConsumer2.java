@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import nl.wur.ssb.GenBankHandler.data.QualifierValue;
 import nl.wur.ssb.GenBankHandler.data.ResidueType;
+import nl.wur.ssb.GenBankHandler.data.StrandMultiplicity;
+import nl.wur.ssb.GenBankHandler.data.StrandType;
 
 public interface ParserConsumer2
 {
@@ -17,10 +20,12 @@ public interface ParserConsumer2
   public void size(int size) throws Exception;
   //its either dna(4 codes), codon(64 codes) coding or protein(~20 codes)
   public void residueType(ResidueType type) throws Exception;
+  //Strand multiplicity (optional field only for genbank)
+  public void strandMultiplicity(StrandMultiplicity multiplicity) throws Exception;
   //The type of residues making up the sequence in this
   //record. Normally something like RNA, DNA or PROTEIN, but may be as
   //esoteric as 'ss-RNA circular'.
-  public void strandType(String type) throws Exception;
+  public void strandType(StrandType type) throws Exception;
   //Is the strand circular
   public void circular() throws Exception;
   //EMBL only taxonomic division
@@ -140,7 +145,7 @@ public interface ParserConsumer2
   //def = single position representation
   public void oneOf(int def,ArrayList<Integer> positions) throws Exception;
   //a qualifier
-  public void featureQualifier(String key,String value) throws Exception; 
+  public void featureQualifier(String key,QualifierValue value) throws Exception; 
   //end of a feature
   public void endFeature() throws Exception;
   //end of the feature table
