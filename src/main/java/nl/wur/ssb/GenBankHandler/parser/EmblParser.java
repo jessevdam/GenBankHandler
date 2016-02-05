@@ -403,8 +403,8 @@ public class EmblParser extends InsdcParser
     if(circular.equals("circular"))
       consumer.circular();
     consumer.strandType(fields.get(3));
-    consumer.taxDivision(fields.get(4)); 
-    consumer.data_file_division(fields.get(5));
+    consumer.taxDivision(fields.get(5)); 
+    consumer.data_file_division(fields.get(4));
     
 
     
