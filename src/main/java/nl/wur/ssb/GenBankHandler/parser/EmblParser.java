@@ -405,8 +405,8 @@ public class EmblParser extends InsdcParser
       consumer.circular();
 
     consumer.strandType(StrandType.fromStringChecked(fields.get(3).trim()));
-    consumer.taxDivision(fields.get(4)); 
-    consumer.data_file_division(fields.get(5));
+    consumer.taxDivision(fields.get(5)); 
+    consumer.data_file_division(fields.get(4));
        
 
     // TODO - How to deal with the version field?  At the moment the consumer

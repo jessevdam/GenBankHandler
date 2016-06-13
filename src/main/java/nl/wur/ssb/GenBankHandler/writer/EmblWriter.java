@@ -71,7 +71,7 @@ public class EmblWriter extends InsdcWriter {
 		// 6. Taxonomic division
 		// 7. Sequence length
 		this.writeSingleLine("ID",String.format("%s; %s; %s; %s; %s; %s; %s %s.",
-  	acc.getId(),subVersion,circular,record.getStrandType().toString(),dataclass,taxDivision,"" + record.getSize(),record.getResidueType().toString()),false);
+  	acc.getId(),subVersion,circular,record.getStrandType().toString(),taxDivision,dataclass,"" + record.getSize(),record.getResidueType().toString()),false);
 
 		write("XX\n");
 		String accession = "";
