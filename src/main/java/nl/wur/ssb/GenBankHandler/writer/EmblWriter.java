@@ -17,46 +17,50 @@ import nl.wur.ssb.GenBankHandler.util.Util;
 
 import org.apache.commons.lang.StringUtils;
 
-public class EmblWriter extends InsdcWriter
-{
-	@Override public int getBaseIndent() { return 5; }
-	@Override	public int getLineLength() { return 80; };
+public class EmblWriter extends InsdcWriter {
+	@Override
+	public int getBaseIndent() {
+		return 5;
+	}
+
+	@Override
+	public int getLineLength() {
+		return 80;
+	};
+
 	private static int QUALIFIER_INDENT = 21;
 	private static int LETTERS_PER_BLOCK = 10;
 	private static int BLOCKS_PER_LINE = 6;
 	private static int LETTERS_PER_LINE = LETTERS_PER_BLOCK * BLOCKS_PER_LINE;
 	private static int POSITION_PADDING = 10;
-	
-	public EmblWriter(OutputStream output)
-	{
+
+	public EmblWriter(OutputStream output) {
 		super(output);
 	}
-	
-	public EmblWriter(Writer output)
-	{
+
+	public EmblWriter(Writer output) {
 		super(output);
 	}
-	
-	public boolean getRePrintKey()
-	{
+
+	public boolean getRePrintKey() {
 		return true;
 	}
 
-	public void _write_the_first_line(Record record) throws Exception
-	{
+	public void _write_the_first_line(Record record) throws Exception {
 		/* Write the ID and AC lines. */
 		Accession acc = record.accessions.get(0);
 		String subVersion = "";
 		if (acc.getVersion() != 0)
 			subVersion = "SV " + acc.getVersion();
-		
+
+
 		String circular = "linear";
 		if (record.isCircular())
 			circular = "circular";
 
-    // Get the taxonomy division		
+		// Get the taxonomy division
 		String taxDivision = record.taxDivision != null ? record.taxDivision : "";
-		//TODO find better name
+		// TODO find better name
 		String dataclass = record.data_file_division;
 		// ID <1>; SV <2>; <3>; <4>; <5>; <6>; <7> BP.
 		// 1. Primary accession number
@@ -68,16 +72,16 @@ public class EmblWriter extends InsdcWriter
 		// 7. Sequence length
 		this.writeSingleLine("ID",String.format("%s; %s; %s; %s; %s; %s; %s %s.",
   	acc.getId(),subVersion,circular,record.getStrandType().toString(),dataclass,taxDivision,"" + record.getSize(),record.getResidueType().toString()),false);
+
 		write("XX\n");
 		String accession = "";
-		for (Accession item : record.accessions)
-		{
+		for (Accession item : record.accessions) {
 			accession += item.getId() + "; ";
 		}
-		accession = Util.i(accession,0,-1);
-		this.writeSingleLine("AC",accession,false);
+		accession = Util.i(accession, 0, -1);
+		this.writeSingleLine("AC", accession, false);
 	}
-	
+
   public void printDates(Record record) throws Exception
   {  
     /*Print the date lines */
@@ -103,17 +107,15 @@ public class EmblWriter extends InsdcWriter
 	public void _sequence_line(Record record) throws Exception
 	{
 		/* Output for all of the sequence. */
-		
+
 		// Loosely based on code from Howard Salis
 		if (record.getSequence() != null)
 		{
 			String line = "Sequence " + record.getSize() + " " + record.getResidueType().toString() + ";";
-			if(record.baseCount != null)
-			{
-				for(String key : record.baseCount.keySet())
-				{
+			if (record.baseCount != null) {
+				for (String key : record.baseCount.keySet()) {
 					String val = key;
-					if(val.equalsIgnoreCase("other"))
+					if (val.equalsIgnoreCase("other"))
 						val = val.toLowerCase();
 					else
 						val = val.toUpperCase();
@@ -145,14 +147,9 @@ public class EmblWriter extends InsdcWriter
 	        write(String.format("%" + (POSITION_PADDING - 1) + "s\n","" + record.getSize()));
 	    }
 		}
-		else if(record.contigLocation != null)
-		{
-	    this.writeMultiLine("CO",record.contigLocation,false);
-    	write("XX\n");
-		}
 
 	}
-	
+
 	@Override
 	public void writeRecord(Record record) throws Exception
 	{

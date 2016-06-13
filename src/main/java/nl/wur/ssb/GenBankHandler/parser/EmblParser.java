@@ -403,10 +403,12 @@ public class EmblParser extends InsdcParser
     assert(set("", "linear", "circular").contains(circular)) : "LOCUS line does not contain valid entry (linear, circular, ...):\n" + line;
     if(circular.equals("circular"))
       consumer.circular();
+
     consumer.strandType(StrandType.fromStringChecked(fields.get(3).trim()));
     consumer.taxDivision(fields.get(4)); 
     consumer.data_file_division(fields.get(5));
        
+
     // TODO - How to deal with the version field?  At the moment the consumer
     // will try and use this for the ID which isn't ideal for EMBL files.
     int suffixVersion = 0;
