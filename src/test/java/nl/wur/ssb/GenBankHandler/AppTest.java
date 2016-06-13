@@ -132,7 +132,7 @@ public class AppTest extends TestCase
     }
     
     public void testParseWriting() throws Exception {
- 		  //logger.info("process");
+ 		  //logger.info("process"); 
     	this.runParseWriteTest("/embl1.gbk",false,false);
     	this.runParseWriteTest("/embl4.gbk",false,false);
     	this.runParseWriteTest("/genbank3.gbk",true,false);
