@@ -264,11 +264,14 @@ public abstract class InsdcParser
     ArrayList<Integer> endSites = new ArrayList<Integer>();
     for(String base_info : all_base_info)
     {
+      if(base_info.contains("to"))
+      {
     	  String tmp[] = base_info.split("to");
         String start = tmp[0];
         String end = tmp[1]; 
         startSites.add(Integer.parseInt(start.trim()) - 1);
         endSites.add(Integer.parseInt(end.trim()));
+      }
     }
     this.consumer.refereceLocation(type,startSites,endSites);
 	}

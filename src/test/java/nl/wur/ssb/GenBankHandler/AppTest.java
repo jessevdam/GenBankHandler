@@ -1,7 +1,11 @@
 package nl.wur.ssb.GenBankHandler;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.BasicConfigurator;
 
 import junit.framework.TestCase;
 import nl.wur.ssb.GenBankHandler.data.Feature;
@@ -14,9 +18,6 @@ import nl.wur.ssb.GenBankHandler.util.ParserConsumer2Stream;
 import nl.wur.ssb.GenBankHandler.writer.EmblWriter;
 import nl.wur.ssb.GenBankHandler.writer.GenBankWriter;
 import nl.wur.ssb.GenBankHandler.writer.InsdcWriter;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.BasicConfigurator;
 
 public class AppTest extends TestCase
 {
@@ -149,6 +150,23 @@ public class AppTest extends TestCase
     	//OC is missing in this case, rest is ok
     	//this.runParseWriteCrossTest("/rast.gbk",true,false);
  	  }
+    
+    private void runParseTest2(String file,boolean isGenbank,boolean allowBogus) throws Exception
+    {
+      InputStream in = new FileInputStream(file);
+      StringWriter buf = new StringWriter();
+      InsdcParser parser = null;
+      if(isGenbank)
+        parser = new GenBankParser(in,new ParserConsumer2Stream(buf));
+      else
+        parser = new EmblParser(in,new ParserConsumer2Stream(buf));
+      parser.parse(allowBogus);
+      //System.out.println(buf);
+    }
+   /*
+    public void testBig() throws Exception {
+      this.runParseTest2("/media/jesse/bulkdata/work/GCF_000233375.1_ICSASG_v2_genomic.gbff",true,true);
+    }*/
 
 }
 
