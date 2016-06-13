@@ -189,7 +189,9 @@ public class GenBankParser extends InsdcParser
         line = this.in.readLine();
     }
     // Seq("".join(seq_lines), this.alphabet)
-    consumer.sequence(seq_lines.toString());
+    //Skip if the sequence length is to long (longer the 10 mb)
+    if(seq_lines.length() < 10000000)
+      consumer.sequence(seq_lines.toString());
     return misc_lines;
 	}
 		

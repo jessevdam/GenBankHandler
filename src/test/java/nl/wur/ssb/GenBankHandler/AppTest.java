@@ -157,16 +157,16 @@ public class AppTest extends TestCase
       StringWriter buf = new StringWriter();
       InsdcParser parser = null;
       if(isGenbank)
-        parser = new GenBankParser(in,new ParserConsumer2Stream(buf));
+        parser = new GenBankParser(in,new RecordBuilder());
       else
-        parser = new EmblParser(in,new ParserConsumer2Stream(buf));
-      parser.parse(allowBogus);
+        parser = new EmblParser(in,new RecordBuilder());
+      while(parser.parse(allowBogus));
       //System.out.println(buf);
     }
-   /*
+   
     public void testBig() throws Exception {
       this.runParseTest2("/media/jesse/bulkdata/work/GCF_000233375.1_ICSASG_v2_genomic.gbff",true,true);
-    }*/
+    }
 
 }
 

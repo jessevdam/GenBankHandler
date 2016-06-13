@@ -468,6 +468,8 @@ public class LocationParser
 	        int i = location_line.indexOf("(");
 	        // cur_feature.location_operator = location_line[:i]
 	        // Can't split on the comma because of positions like one-of(1,2,3)
+	        this.consumer.startCompoundLocation(Util.i(location_line,0,i));
+
 	        for(String part : splitCompoundLoc(Util.i(location_line,i + 1,-1)))
 	        {
 	        	  int part_strand = strand;
@@ -477,9 +479,10 @@ public class LocationParser
 	                part = Util.i(part,11,-1);
 	                if(strand != -1)
 	                	throw new ParseException("Illegal double complement detected");
-	                part_strand = -1;
-	                consumer.startComplement();                
+	                part_strand = -1;          
 	            }
+	            if(part_strand == -1)
+	              consumer.startComplement();
 	            String ref = null;
 	            if(part.indexOf(":") != -1)
 	            {
@@ -494,6 +497,7 @@ public class LocationParser
 	            if(part_strand == -1)
 	            	consumer.endComplement();
 	        }
+	        this.consumer.endCompoundLocation();
 	        
 	        break;
 	    }
